@@ -1902,40 +1902,28 @@ body {
 
 .user-menu-greeting {
   padding: 7px 8px;
-
   font-size: 14px;
   font-weight: 600;
-
   color: #242424;
 }
 
 .user-menu-divider {
   height: 1px;
-
   background: #eeeeee;
-
   margin: 7px 0;
 }
-
 .user-logout-button {
   width: 100%;
-
   padding: 9px 10px;
-
   border: none;
   border-radius: 8px;
-
   background: #242424;
   color: white;
-
   font-size: 13px;
   font-weight: 600;
-
   cursor: pointer;
-
   transition: 0.2s ease;
 }
-
 .user-logout-button:hover {
   background: #000000;
   transform: translateY(-1px);
@@ -1945,3 +1933,4 @@ body {
   padding-left: 8px;
   transform: translateY(-2px);
 }
+
