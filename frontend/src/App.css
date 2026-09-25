@@ -576,10 +576,10 @@ body {
   font-weight: 800;
 
   transition:
-    background 0.2s ease,
-    border-color 0.2s ease,
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
+    background 0.08s ease,
+    border-color 0.08s ease,
+    transform 0.08s ease,
+    box-shadow 0.08s ease;
 }
 
 .check-wrap:hover .custom-check {
@@ -604,7 +604,7 @@ body {
 
   transform: scale(1.07);
 
-  animation: checkPop 0.25s ease;
+  animation: checkPop 0.08s ease;
 }
 
 .task-row.completed .task-name {
@@ -1559,15 +1559,11 @@ body {
 
 @keyframes checkPop {
   0% {
-    transform: scale(0.7);
-  }
-
-  70% {
-    transform: scale(1.15);
+    transform: scale(0.88);
   }
 
   100% {
-    transform: scale(1.07);
+    transform: scale(1.02);
   }
 }
 
