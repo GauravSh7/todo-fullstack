@@ -165,14 +165,15 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
 
         <div className="google-login-wrapper">
           <GoogleLogin
-            onSuccess={handleGoogleRegister}
-            onError={() => {
-              setError(
-                "Google registration failed. Please try again."
-              );
-            }}
-            width="100%"
-          />
+  onSuccess={handleGoogleRegister}
+  onError={() => {
+    setError(
+      "Google registration failed. Please try again."
+    );
+  }}
+  width="400"
+  use_fedcm_for_button={true}
+/>
         </div>
 
         <div className="auth-switch">

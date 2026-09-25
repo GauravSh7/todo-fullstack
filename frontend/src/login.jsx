@@ -211,16 +211,16 @@ function Login({
 
         <div className="google-login-wrapper">
           <GoogleLogin
-            onSuccess={handleGoogleLogin}
-            onError={() => {
-              setError(
-                "Google login failed. Please try again."
-              );
-            }}
-            width="100%"
-          />
-        </div>
-
+  onSuccess={handleGoogleLogin}
+  onError={() => {
+    setError(
+      "Google login failed. Please try again."
+    );
+  }}
+  width="400"
+  use_fedcm_for_button={true}
+/>
+         </div>
         <div className="auth-switch">
           <span>
             Don't have an account?
