@@ -83,6 +83,7 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
       }
 
       localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
 
       window.location.reload();
     } catch (error) {
