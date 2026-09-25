@@ -2624,3 +2624,244 @@ body {
     width: min(255px, calc(100vw - 58px));
   }
 }
+
+
+/* =========================
+   MOBILE RESPONSIVE PASS
+========================= */
+
+html,
+body {
+  overflow-x: hidden;
+}
+
+@media (max-width: 650px) {
+  .app {
+    width: calc(100% - 24px);
+    padding: 28px 0 32px;
+  }
+
+  .app-header {
+    margin-bottom: 20px;
+    padding-top: 24px;
+  }
+
+  .app-header h1 {
+    font-size: clamp(42px, 14vw, 54px);
+    letter-spacing: -2px;
+  }
+
+  .app-header h1::after {
+    top: -6px;
+    right: -19px;
+    font-size: 13px;
+  }
+
+  .app-header p {
+    font-size: 12px;
+  }
+
+  .todo-card {
+    border-radius: 18px;
+  }
+
+  .card-top {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    padding: 14px;
+  }
+
+  .selected-date {
+    max-width: 100%;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+
+  .progress-area {
+    width: 100%;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .progress-wrapper {
+    min-width: 0;
+  }
+
+  .profile-progress-wrapper .user-menu {
+    max-width: calc(100vw - 24px);
+  }
+
+  .table-header,
+  .add-row,
+  .task-row {
+    grid-template-columns: 82px minmax(0, 1fr) 58px;
+  }
+
+  .table-header > div,
+  .task-row > div {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .table-header > div {
+    padding-top: 11px;
+    padding-bottom: 11px;
+    font-size: 8px;
+    letter-spacing: 1px;
+  }
+
+  .add-row {
+    gap: 8px;
+    padding: 10px;
+  }
+
+  .time-picker-wrap {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .time-picker-button {
+    padding: 0 9px;
+    font-size: 11px;
+  }
+
+  .time-picker-popover {
+    width: min(255px, calc(100vw - 28px));
+  }
+
+  .add-row input[type="text"] {
+    width: 100%;
+    min-width: 0;
+    font-size: 12px;
+  }
+
+  .task-row {
+    min-height: 58px;
+  }
+
+  .task-row > div {
+    padding-top: 15px;
+    padding-bottom: 15px;
+  }
+
+  .task-time {
+    font-size: 11px;
+    white-space: nowrap;
+  }
+
+  .task-name {
+    min-width: 0;
+    font-size: 14px;
+    line-height: 1.4;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+  }
+
+  .task-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bottom-controls {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+    margin-top: 12px;
+  }
+
+  .bottom-left,
+  .bottom-right {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .bottom-left > button {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .bottom-right {
+    justify-content: stretch;
+  }
+
+  .date-control {
+    flex: 1;
+    min-width: 0;
+    width: auto;
+  }
+
+  .format-switch {
+    flex-shrink: 0;
+  }
+}
+
+@media (max-width: 400px) {
+  .app {
+    width: calc(100% - 16px);
+    padding-top: 20px;
+  }
+
+  .app-header {
+    padding-top: 16px;
+  }
+
+  .app-header h1 {
+    font-size: 40px;
+  }
+
+  .app-header p {
+    font-size: 11px;
+  }
+
+  .card-top {
+    padding: 12px;
+  }
+
+  .table-header,
+  .add-row,
+  .task-row {
+    grid-template-columns: 76px minmax(0, 1fr) 52px;
+  }
+
+  .table-header > div,
+  .task-row > div {
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  .add-row {
+    gap: 6px;
+    padding: 8px;
+  }
+
+  .time-picker-button {
+    gap: 5px;
+    padding: 0 7px;
+    font-size: 10px;
+  }
+
+  .time-picker-icon {
+    font-size: 14px;
+  }
+
+  .task-name {
+    font-size: 13px;
+  }
+
+  .bottom-left,
+  .bottom-right {
+    gap: 7px;
+  }
+
+  .date-control {
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  .format-switch button {
+    padding: 0 8px;
+  }
+}
