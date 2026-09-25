@@ -2419,3 +2419,31 @@ body {
     animation: none;
   }
 }
+
+    
+/* =========================
+   DARK NATIVE DATE / TIME ICONS
+========================= */
+
+.date-control,
+.add-row input[type="time"] {
+  color-scheme: dark;
+}
+
+.date-control::-webkit-calendar-picker-indicator,
+.add-row input[type="time"]::-webkit-calendar-picker-indicator {
+  filter: invert(1) brightness(1.35);
+  opacity: 0.95;
+  cursor: pointer;
+}
+
+.date-control::-webkit-clear-button,
+.add-row input[type="time"]::-webkit-clear-button {
+  filter: invert(1);
+}
+
+    
+/* Profile button has no dropdown triangle */
+.profile-progress-button .user-arrow {
+  display: none;
+}
