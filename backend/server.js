@@ -28,6 +28,7 @@ const transporter = nodemailer.createTransport({
 const allowedOrigins = [
   "http://localhost:5173",
   "https://todo-nine-mu-94.vercel.app",
+  "https://todo-xcem.vercel.app",
 ];
 
 app.use(
