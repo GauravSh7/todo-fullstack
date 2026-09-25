@@ -75,12 +75,22 @@ function ResetPassword({
         }
       );
 
-      const data = await response.json();
+      const rawResponse = await response.text();
+
+      let data = {};
+
+      try {
+        data = rawResponse
+          ? JSON.parse(rawResponse)
+          : {};
+      } catch {
+        data = {};
+      }
 
       if (!response.ok) {
         setError(
           data.error ||
-            "Unable to reset password."
+            `Server error (${response.status}). Please try again.`
         );
         return;
       }
@@ -99,7 +109,9 @@ function ResetPassword({
       );
 
       setError(
-        "Unable to connect to the server. Please try again."
+        error instanceof TypeError
+          ? "Could not reach the backend. Please try again."
+          : "Unable to reset password. Please try again."
       );
     } finally {
       setLoading(false);
