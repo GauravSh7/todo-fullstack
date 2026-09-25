@@ -42,7 +42,88 @@ app.use(
     },
   })
 );
-app.use(express.json());
+app.use(express.json());\n\napp.set("trust proxy", 1);
+
+const OTP_RATE_LIMIT_WINDOW_MS = 10 * 60 * 1000;
+const OTP_RATE_LIMIT_MAX = 3;
+
+const otpRequestTracker = new Map();
+
+function getClientIp(req) {
+  return (
+    req.ip ||
+    req.headers["x-forwarded-for"] ||
+    req.socket.remoteAddress ||
+    "unknown"
+  );
+}
+
+function checkOtpRateLimit(req, email) {
+  const normalizedEmail = normalizeEmail(email);
+  const ip = getClientIp(req);
+  const now = Date.now();
+
+  const cleanupBefore =
+    now - OTP_RATE_LIMIT_WINDOW_MS;
+
+  for (const [
+    key,
+    timestamps,
+  ] of otpRequestTracker.entries()) {
+    const recent =
+      timestamps.filter(
+        (timestamp) =>
+          timestamp > cleanupBefore
+      );
+
+    if (recent.length === 0) {
+      otpRequestTracker.delete(key);
+    } else {
+      otpRequestTracker.set(key, recent);
+    }
+  }
+
+  const keys = [
+    `email:${normalizedEmail}`,
+    `ip:${ip}`,
+  ];
+
+  for (const key of keys) {
+    const timestamps =
+      otpRequestTracker.get(key) || [];
+
+    const recent =
+      timestamps.filter(
+        (timestamp) =>
+          timestamp > cleanupBefore
+      );
+
+    if (
+      recent.length >=
+      OTP_RATE_LIMIT_MAX
+    ) {
+      return false;
+    }
+  }
+
+  for (const key of keys) {
+    const timestamps =
+      otpRequestTracker.get(key) || [];
+
+    otpRequestTracker.set(key, [
+      ...timestamps,
+      now,
+    ]);
+  }
+
+  return true;
+}
+
+function validateEmail(email) {
+  return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(
+    normalizeEmail(email)
+  );
+}
 
 
 // =========================
@@ -502,6 +583,22 @@ app.post("/api/resend-email-otp", async (req, res) => {
 
     const normalizedEmail = normalizeEmail(email);
 
+    if (
+      !validateEmail(normalizedEmail)
+    ) {
+      return res.status(400).json({
+        error: "Please enter a valid email address.",
+      });
+    }
+
+    if (
+      !checkOtpRateLimit(req, normalizedEmail)
+    ) {
+      return res.status(429).json({
+        error: "Too many OTP requests. Please try again later.",
+      });
+    }
+
     const result = await pool.query(
       "SELECT * FROM users WHERE LOWER(email) = LOWER($1)",
       [normalizedEmail]
@@ -642,6 +739,22 @@ app.post("/api/forgot-password", async (req, res) => {
     }
 
     const normalizedEmail = normalizeEmail(email);
+
+    if (
+      !validateEmail(normalizedEmail)
+    ) {
+      return res.status(400).json({
+        error: "Please enter a valid email address.",
+      });
+    }
+
+    if (
+      !checkOtpRateLimit(req, normalizedEmail)
+    ) {
+      return res.status(429).json({
+        error: "Too many OTP requests. Please try again later.",
+      });
+    }
 
     const result = await pool.query(
       "SELECT * FROM users WHERE LOWER(email) = LOWER($1)",
