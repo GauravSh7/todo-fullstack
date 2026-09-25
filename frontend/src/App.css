@@ -2011,3 +2011,286 @@ body {
     width: 100%;
   }
 }
+
+
+/* =========================
+   FINAL UI REFINEMENT
+========================= */
+
+body {
+  background:
+    radial-gradient(circle at 8% 6%, rgba(99, 102, 241, 0.18), transparent 28%),
+    radial-gradient(circle at 92% 9%, rgba(124, 58, 237, 0.14), transparent 25%),
+    radial-gradient(circle at 50% 100%, rgba(14, 116, 144, 0.10), transparent 30%),
+    #11131a;
+
+  color: #e5e7eb;
+}
+
+.app-header h1 {
+  font-size: 58px;
+  letter-spacing: -3px;
+
+  background: linear-gradient(
+    105deg,
+    #f8fafc,
+    #c4b5fd 55%,
+    #818cf8
+  );
+
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+
+  animation: none;
+
+  text-shadow:
+    0 8px 28px rgba(129, 140, 248, 0.10);
+}
+
+.app-header p {
+  color: #9ca3af;
+}
+
+/* Main notebook card */
+.todo-card {
+  background: #171a21;
+
+  border-color: #2a303c;
+
+  box-shadow:
+    0 26px 65px rgba(0, 0, 0, 0.30),
+    0 5px 18px rgba(0, 0, 0, 0.18);
+}
+
+/* Header row containing date, progress and profile */
+.card-top {
+  position: relative;
+
+  background: #1d212a;
+
+  border-bottom-color: #2c3340;
+
+  border-radius: 20px 20px 0 0;
+
+  transition:
+    padding-bottom 0.18s ease;
+}
+
+.card-top.profile-menu-open {
+  padding-bottom: 125px;
+}
+
+.selected-date {
+  color: #e5e7eb;
+}
+
+.progress-wrapper span {
+  color: #a5b4fc;
+}
+
+.profile-progress-wrapper {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+
+  flex-shrink: 0;
+}
+
+.profile-progress-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 5px;
+
+  min-width: 48px;
+  min-height: 44px;
+
+  padding: 3px 4px;
+
+  border: 1px solid #353c49;
+  border-radius: 999px;
+
+  background: #12151c;
+
+  cursor: pointer;
+}
+
+.profile-progress-button:hover {
+  border-color: #596274;
+  background: #1a1e27;
+}
+
+.profile-progress-button .user-avatar {
+  width: 32px;
+  height: 32px;
+
+  background: linear-gradient(
+    135deg,
+    #303744,
+    #1f2430
+  );
+
+  border-color: #566071;
+}
+
+.profile-progress-button .user-arrow {
+  color: #9ca3af;
+}
+
+.profile-progress-wrapper .user-menu {
+  top: 49px;
+  right: 0;
+  z-index: 60;
+}
+
+/* Dark task area */
+.table-header {
+  background: #232832;
+  color: #a7b0bf;
+}
+
+.add-row {
+  background: #1b1f27;
+  border-bottom-color: #2a303b;
+}
+
+.add-row input {
+  background: #12151b;
+  border-color: #343b48;
+  color: #e5e7eb;
+}
+
+.add-row input:hover {
+  border-color: #515b6c;
+  background: #171b23;
+}
+
+.add-row input:focus {
+  background: #171b23;
+  border-color: #818cf8;
+}
+
+.add-row input::placeholder {
+  color: #687386;
+}
+
+.task-row {
+  background: #181c23;
+  border-bottom-color: #292f39;
+}
+
+.task-row:hover {
+  background: #222733;
+}
+
+.task-row.selected {
+  background: #2a2e3a;
+}
+
+.task-time {
+  color: #9aa4b4;
+}
+
+.task-name {
+  color: #e5e7eb;
+}
+
+.task-row:hover .task-name {
+  color: #c4b5fd;
+}
+
+.empty-state {
+  background: #181c23;
+}
+
+.empty-state h3 {
+  color: #e5e7eb;
+}
+
+.empty-state p {
+  color: #8c97a8;
+}
+
+/* Dark dropdown/menu */
+.user-menu {
+  background: #1b1f27;
+
+  border-color: #353c49;
+
+  box-shadow:
+    0 18px 35px rgba(0, 0, 0, 0.35);
+}
+
+.user-menu-greeting {
+  color: #e5e7eb;
+}
+
+.user-menu-divider {
+  background: #303642;
+}
+
+.user-logout-button {
+  background: #ef4444;
+}
+
+.user-logout-button:hover {
+  background: #dc2626;
+}
+
+/* Red delete action */
+.delete-button {
+  border-color: #7f1d1d;
+
+  background: #dc2626;
+
+  color: #ffffff;
+
+  box-shadow:
+    0 6px 15px rgba(220, 38, 38, 0.18);
+}
+
+.delete-button:hover:not(:disabled) {
+  background: #b91c1c;
+
+  border-color: #991b1b;
+
+  box-shadow:
+    0 9px 20px rgba(220, 38, 38, 0.24);
+}
+
+.delete-button:disabled {
+  opacity: 0.35;
+}
+
+/* Dark date and time-format controls */
+.date-control {
+  background: #171b23;
+  border-color: #343b48;
+  color: #d1d5db;
+}
+
+.date-control:hover {
+  border-color: #596274;
+}
+
+.format-switch {
+  background: #171b23;
+  border-color: #343b48;
+}
+
+.format-switch button {
+  color: #9ca3af;
+}
+
+.format-switch button:hover {
+  background: #282d38;
+  color: #c4b5fd;
+}
+
+.format-switch button.active {
+  background: #f3f4f6;
+  color: #111827;
+}
