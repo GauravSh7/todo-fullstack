@@ -2105,24 +2105,21 @@ body {
   align-items: center;
   justify-content: center;
 
-  gap: 5px;
+  width: 38px;
+  height: 38px;
 
-  min-width: 48px;
-  min-height: 44px;
+  padding: 0;
 
-  padding: 3px 4px;
+  border: 0;
+  border-radius: 50%;
 
-  border: 1px solid #353c49;
-  border-radius: 999px;
-
-  background: #12151c;
+  background: transparent;
 
   cursor: pointer;
 }
 
 .profile-progress-button:hover {
-  border-color: #596274;
-  background: #1a1e27;
+  background: transparent;
 }
 
 .profile-progress-button .user-avatar {
