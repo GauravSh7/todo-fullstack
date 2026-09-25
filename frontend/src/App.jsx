@@ -253,34 +253,47 @@ useEffect(() => {
     );
   };
 
-  const applyPickedTime = () => {
+  const updateTimeFromPicker = (
+    hourValue,
+    minuteValue,
+    periodValue
+  ) => {
     if (timeFormat === "24") {
       setTime(
-        pickerHour + ":" + pickerMinute
+        hourValue + ":" + minuteValue
       );
-    } else {
-      let hour = Number(pickerHour);
-
-      if (
-        pickerPeriod === "AM" &&
-        hour === 12
-      ) {
-        hour = 0;
-      }
-
-      if (
-        pickerPeriod === "PM" &&
-        hour !== 12
-      ) {
-        hour += 12;
-      }
-
-      setTime(
-        String(hour).padStart(2, "0") +
-        ":" +
-        pickerMinute
-      );
+      return;
     }
+
+    let hour = Number(hourValue);
+
+    if (
+      periodValue === "AM" &&
+      hour === 12
+    ) {
+      hour = 0;
+    }
+
+    if (
+      periodValue === "PM" &&
+      hour !== 12
+    ) {
+      hour += 12;
+    }
+
+    setTime(
+      String(hour).padStart(2, "0") +
+      ":" +
+      minuteValue
+    );
+  };
+
+  const applyPickedTime = () => {
+    updateTimeFromPicker(
+      pickerHour,
+      pickerMinute,
+      pickerPeriod
+    );
 
     setShowTimePicker(false);
   };
@@ -850,9 +863,15 @@ useEffect(() => {
                   <div className="time-picker-fields">
                     <select
                       value={pickerHour}
-                      onChange={(e) =>
-                        setPickerHour(e.target.value)
-                      }
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setPickerHour(value);
+                        updateTimeFromPicker(
+                          value,
+                          pickerMinute,
+                          pickerPeriod
+                        );
+                      }}
                       aria-label="Hour"
                     >
                       {(timeFormat === "24"
@@ -879,9 +898,15 @@ useEffect(() => {
 
                     <select
                       value={pickerMinute}
-                      onChange={(e) =>
-                        setPickerMinute(e.target.value)
-                      }
+                      onChange={(e) => {
+                        const value = e.target.value;
+                        setPickerMinute(value);
+                        updateTimeFromPicker(
+                          pickerHour,
+                          value,
+                          pickerPeriod
+                        );
+                      }}
                       aria-label="Minute"
                     >
                       {Array.from(
@@ -901,9 +926,15 @@ useEffect(() => {
                     {timeFormat === "12" && (
                       <select
                         value={pickerPeriod}
-                        onChange={(e) =>
-                          setPickerPeriod(e.target.value)
-                        }
+                        onChange={(e) => {
+                          const value = e.target.value;
+                          setPickerPeriod(value);
+                          updateTimeFromPicker(
+                            pickerHour,
+                            pickerMinute,
+                            value
+                          );
+                        }}
                         aria-label="AM or PM"
                       >
                         <option value="AM">AM</option>
