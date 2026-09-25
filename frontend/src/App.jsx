@@ -327,6 +327,8 @@ useEffect(() => {
 
       setTasks(previousTasks);
     }
+  };
+
   // TOGGLE TASK
   const toggleTask = async (id) => {
     const currentTask = tasks.find(
