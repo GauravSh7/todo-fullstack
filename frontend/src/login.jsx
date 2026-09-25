@@ -148,6 +148,7 @@ function Login({
           aria-live="polite"
         >
           <div className="auth-loading-box">
+            <div className="auth-loading-spinner" />
             <div className="auth-loading-title">
               Logging in...
             </div>
