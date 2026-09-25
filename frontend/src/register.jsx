@@ -60,6 +60,7 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
 
   const handleGoogleRegister = async (credentialResponse) => {
     setError("");
+    setLoading(true);
 
     try {
       const response = await fetch(
@@ -92,11 +93,34 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
       setError(
         "Google registration failed. Please try again."
       );
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="auth-page">
+      {loading && (
+        <div
+          className="auth-loading-overlay"
+          role="status"
+          aria-live="polite"
+        >
+          <div className="auth-loading-box">
+            <div className="auth-loading-spinner" />
+            <div className="auth-loading-title">
+              Creating account...
+            </div>
+            <div className="auth-loading-track">
+              <div className="auth-loading-progress" />
+            </div>
+            <div className="auth-loading-text">
+              Please wait while we create your account.
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="auth-card">
 
         <div className="auth-header">
