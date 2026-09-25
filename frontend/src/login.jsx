@@ -83,6 +83,7 @@ function Login({
     credentialResponse
   ) => {
     setError("");
+    setLoading(true);
 
     try {
       const response = await fetch(
@@ -133,11 +134,33 @@ function Login({
       setError(
         "Google login failed. Please try again."
       );
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="auth-page">
+      {loading && (
+        <div
+          className="auth-loading-overlay"
+          role="status"
+          aria-live="polite"
+        >
+          <div className="auth-loading-box">
+            <div className="auth-loading-title">
+              Logging in...
+            </div>
+            <div className="auth-loading-track">
+              <div className="auth-loading-progress" />
+            </div>
+            <div className="auth-loading-text">
+              Please wait while we sign you in.
+            </div>
+          </div>
+        </div>
+      )}
+
       <div className="auth-card">
 
         <div className="auth-header">
@@ -217,7 +240,7 @@ function Login({
       "Google login failed. Please try again."
     );
   }}
-  width="400"
+  width="300"
   use_fedcm_for_button={true}
 />
          </div>
