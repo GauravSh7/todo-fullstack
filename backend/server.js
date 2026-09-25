@@ -68,15 +68,68 @@ async function sendOTP(email, otp, purpose) {
     subject = "Reset your Todo App password";
   }
 
+  const text = `Your OTP is ${otp}. It will expire in 10 minutes.`;
+
+  // Render's free web services block outbound SMTP ports.
+  // Use Brevo's HTTPS API in production when a Brevo API key is configured.
+  if (process.env.BREVO_API_KEY) {
+    const response = await fetch(
+      "https://api.brevo.com/v3/smtp/email",
+      {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "api-key": process.env.BREVO_API_KEY,
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          sender: {
+            email: process.env.EMAIL_USER,
+            name: "Todo App",
+          },
+          to: [
+            {
+              email,
+            },
+          ],
+          subject,
+          textContent: text,
+        }),
+        signal: AbortSignal.timeout(10000),
+      }
+    );
+
+    if (!response.ok) {
+      const errorText = await response.text();
+
+      throw new Error(
+        `Brevo email failed (${response.status}): ${errorText}`
+      );
+    }
+
+    const result = await response.json();
+
+    console.log(
+      `OTP email sent via Brevo for ${purpose} to ${email}. Message ID: ${result.messageId || "unknown"}`
+    );
+
+    return;
+  }
+
+  // Local development fallback.
+  // On Render without BREVO_API_KEY, this will fail quickly instead of hanging.
   const info = await transporter.sendMail({
     from: process.env.EMAIL_USER,
     to: email,
-    subject: subject,
-    text: `Your OTP is ${otp}. It will expire in 10 minutes.`,
+    subject,
+    text,
+    connectionTimeout: 10000,
+    greetingTimeout: 10000,
+    socketTimeout: 10000,
   });
 
   console.log(
-    `OTP email sent for ${purpose} to ${email}. Message ID: ${info.messageId}`
+    `OTP email sent via SMTP for ${purpose} to ${email}. Message ID: ${info.messageId}`
   );
 }
 
