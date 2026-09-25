@@ -285,7 +285,7 @@ useEffect(() => {
 
     try {
       const response = await fetch(
-        `${API_URL}/api/tasks/${selectedTasks}`,
+        `${API_URL}/api/tasks/${selectedTask}`,
         {
           method: "DELETE",
           headers: {
