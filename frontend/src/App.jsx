@@ -264,9 +264,17 @@ useEffect(() => {
       const savedTask =
         await response.json();
 
+      const taskToAdd = {
+        ...savedTask,
+        task: savedTask.task || newTask.task,
+        time: savedTask.time || newTask.time,
+        date: String(savedTask.date || newTask.date).slice(0, 10),
+        status: savedTask.status || newTask.status,
+      };
+
       setTasks((currentTasks) => [
         ...currentTasks,
-        savedTask,
+        taskToAdd,
       ]);
 
       setTime("");
@@ -283,9 +291,19 @@ useEffect(() => {
   const deleteTask = async () => {
     if (!selectedTask) return;
 
+    const taskId = selectedTask;
+    const previousTasks = tasks;
+
+    setTasks((currentTasks) =>
+      currentTasks.filter(
+        (item) => item.id !== taskId
+      )
+    );
+    setSelectedTask(null);
+
     try {
       const response = await fetch(
-        `${API_URL}/api/tasks/${selectedTask}`,
+        `${API_URL}/api/tasks/${taskId}`,
         {
           method: "DELETE",
           headers: {
@@ -301,23 +319,14 @@ useEffect(() => {
           "Failed to delete task"
         );
       }
-
-      setTasks((currentTasks) =>
-        currentTasks.filter(
-          (item) =>
-            item.id !== selectedTask
-        )
-      );
-
-      setSelectedTask(null);
     } catch (error) {
       console.log(
         "Error deleting task:",
         error
       );
-    }
-  };
 
+      setTasks(previousTasks);
+    }
   // TOGGLE TASK
   const toggleTask = async (id) => {
     const currentTask = tasks.find(
