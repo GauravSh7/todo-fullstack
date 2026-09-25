@@ -549,58 +549,9 @@ useEffect(() => {
 
       <header className="app-header">
 
-        {/* USER PROFILE */}
+        <h1>TODO</h1>
 
-      <div
-  className="user-profile-wrapper"
-  ref={userProfileRef}
->
-
-          <button
-            className="user-profile-button"
-            type="button"
-            onClick={() =>
-              setShowUserMenu(
-                !showUserMenu
-              )
-            }
-          >
-
-            <div className="user-avatar">
-              {userInitial}
-            </div>
-
-            <span className="user-arrow">
-              ▼
-            </span>
-
-          </button>
-
-          {showUserMenu && (
-            <div className="user-menu">
-
-              <div className="user-menu-greeting">
-                Hi, {displayName} 👋
-              </div>
-
-              <div className="user-menu-divider" />
-
-              <button
-                className="user-logout-button"
-                type="button"
-                onClick={handleLogout}
-              >
-                Logout
-              </button>
-
-            </div>
-          )}
-
-        </div>
-
-        <h1>Todo</h1>
-
-        <p>Do what you Love</p>
+        <p>Plan less. Finish more.</p>
 
       </header>
 
@@ -616,7 +567,9 @@ useEffect(() => {
 
           {/* DATE + PROGRESS */}
 
-          <div className="card-top">
+          <div
+            className={"card-top" + (showUserMenu ? " profile-menu-open" : "")}
+          >
 
             <div className="selected-date">
               {selectedDateText}
@@ -711,6 +664,48 @@ useEffect(() => {
 
           </div>
 
+
+              {/* USER PROFILE */}
+              <div
+                className="profile-progress-wrapper"
+                ref={userProfileRef}
+              >
+                <button
+                  className="profile-progress-button"
+                  type="button"
+                  onClick={() =>
+                    setShowUserMenu(!showUserMenu)
+                  }
+                  aria-label="Open profile menu"
+                  aria-expanded={showUserMenu}
+                >
+                  <div className="user-avatar">
+                    {userInitial}
+                  </div>
+
+                  <span className="user-arrow">
+                    ▼
+                  </span>
+                </button>
+
+                {showUserMenu && (
+                  <div className="user-menu">
+                    <div className="user-menu-greeting">
+                      Hi, {displayName} 👋
+                    </div>
+
+                    <div className="user-menu-divider" />
+
+                    <button
+                      className="user-logout-button"
+                      type="button"
+                      onClick={handleLogout}
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
           {/* TABLE HEADER */}
 
           <div className="table-header">
