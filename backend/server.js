@@ -68,12 +68,16 @@ async function sendOTP(email, otp, purpose) {
     subject = "Reset your Todo App password";
   }
 
-  await transporter.sendMail({
+  const info = await transporter.sendMail({
     from: process.env.EMAIL_USER,
     to: email,
     subject: subject,
     text: `Your OTP is ${otp}. It will expire in 10 minutes.`,
   });
+
+  console.log(
+    `OTP email sent for ${purpose} to ${email}. Message ID: ${info.messageId}`
+  );
 }
 
 async function createOTP(userId, email, purpose) {
@@ -594,7 +598,10 @@ app.post("/api/forgot-password", async (req, res) => {
     if (result.rows.length > 0) {
       const user = result.rows[0];
 
-      if (user.password) {
+      // Any verified account can request a password reset.
+      // Google-created accounts may have password = NULL,
+      // but they can still set a password after verifying the OTP.
+      if (user.email_verified) {
         await createOTP(
           user.id,
           user.email,
