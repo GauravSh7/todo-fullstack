@@ -120,7 +120,7 @@ function checkOtpRateLimit(req, email) {
 }
 
 function validateEmail(email) {
-  return /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/.test(
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(
     normalizeEmail(email)
   );
 }
