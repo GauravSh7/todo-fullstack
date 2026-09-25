@@ -21,6 +21,7 @@ function App() {
     !!localStorage.getItem("token")
   );
 const userProfileRef = useRef(null);
+const timePickerRef = useRef(null);
 useEffect(() => {
   const handleClickOutside = (event) => {
     if (
@@ -30,6 +31,15 @@ useEffect(() => {
       )
     ) {
       setShowUserMenu(false);
+    }
+
+    if (
+      timePickerRef.current &&
+      !timePickerRef.current.contains(
+        event.target
+      )
+    ) {
+      setShowTimePicker(false);
     }
   };
 
@@ -69,6 +79,18 @@ useEffect(() => {
 
   const [time, setTime] = useState("");
   const [task, setTask] = useState("");
+
+  const [showTimePicker, setShowTimePicker] =
+    useState(false);
+
+  const [pickerHour, setPickerHour] =
+    useState("12");
+
+  const [pickerMinute, setPickerMinute] =
+    useState("00");
+
+  const [pickerPeriod, setPickerPeriod] =
+    useState("AM");
   const [tasks, setTasks] = useState([]);
 
   const [selectedTask, setSelectedTask] =
@@ -169,23 +191,98 @@ useEffect(() => {
         );
 
   const formatTime = (value) => {
+    const [hourText, minuteText = "00"] =
+      value.split(":");
+
+    const hour = Number(hourText);
+    const minute = minuteText
+      .slice(0, 2)
+      .padStart(2, "0");
+
     if (timeFormat === "24") {
-      return value;
+      return (
+        hourText.padStart(2, "0") +
+        ":" +
+        minute
+      );
     }
 
-    const [hour, minute] = value.split(":");
+    let hour12 = hour % 12;
 
-    let h = Number(hour);
-
-    const ampm = h >= 12 ? "PM" : "AM";
-
-    if (h === 0) {
-      h = 12;
-    } else if (h > 12) {
-      h -= 12;
+    if (hour12 === 0) {
+      hour12 = 12;
     }
 
-    return `${h}:${minute} ${ampm}`;
+    const ampm = hour >= 12 ? "PM" : "AM";
+
+    return (
+      hour12 +
+      ":" +
+      minute +
+      " " +
+      ampm
+    );
+  };
+
+  const openTimePicker = () => {
+    const sourceTime = time || "12:00";
+    const [hourText, minuteText = "00"] =
+      sourceTime.split(":");
+
+    const hour = Number(hourText);
+    const minute = minuteText
+      .slice(0, 2)
+      .padStart(2, "0");
+
+    setPickerMinute(minute);
+
+    if (timeFormat === "24") {
+      setPickerHour(
+        String(hour).padStart(2, "0")
+      );
+    } else {
+      const period = hour >= 12 ? "PM" : "AM";
+      const hour12 = hour % 12 || 12;
+
+      setPickerHour(String(hour12));
+      setPickerPeriod(period);
+    }
+
+    setShowTimePicker(
+      (current) => !current
+    );
+  };
+
+  const applyPickedTime = () => {
+    if (timeFormat === "24") {
+      setTime(
+        pickerHour + ":" + pickerMinute
+      );
+    } else {
+      let hour = Number(pickerHour);
+
+      if (
+        pickerPeriod === "AM" &&
+        hour === 12
+      ) {
+        hour = 0;
+      }
+
+      if (
+        pickerPeriod === "PM" &&
+        hour !== 12
+      ) {
+        hour += 12;
+      }
+
+      setTime(
+        String(hour).padStart(2, "0") +
+        ":" +
+        pickerMinute
+      );
+    }
+
+    setShowTimePicker(false);
   };
 
   const selectedDateText = new Date(
@@ -708,16 +805,110 @@ useEffect(() => {
 
           <div className="add-row">
 
-            <div>
-              <input
-                type="time"
-                value={time}
-                onChange={(e) =>
-                  setTime(
-                    e.target.value
-                  )
-                }
-              />
+            <div
+              className="time-picker-wrap"
+              ref={timePickerRef}
+            >
+              <button
+                className="time-picker-button"
+                type="button"
+                onClick={openTimePicker}
+              >
+                <span className="time-picker-icon">
+                  ◷
+                </span>
+
+                <span>
+                  {time
+                    ? formatTime(time)
+                    : "Select time"}
+                </span>
+
+                <span className="time-picker-chevron">
+                  {showTimePicker ? "▲" : "▼"}
+                </span>
+              </button>
+
+              {showTimePicker && (
+                <div className="time-picker-popover">
+                  <div className="time-picker-title">
+                    Select time
+                  </div>
+
+                  <div className="time-picker-fields">
+                    <select
+                      value={pickerHour}
+                      onChange={(e) =>
+                        setPickerHour(e.target.value)
+                      }
+                      aria-label="Hour"
+                    >
+                      {(timeFormat === "24"
+                        ? Array.from(
+                            { length: 24 },
+                            (_, index) =>
+                              String(index).padStart(2, "0")
+                          )
+                        : Array.from(
+                            { length: 12 },
+                            (_, index) =>
+                              String(index + 1)
+                          )
+                      ).map((hour) => (
+                        <option key={hour} value={hour}>
+                          {hour}
+                        </option>
+                      ))}
+                    </select>
+
+                    <span className="time-picker-colon">
+                      :
+                    </span>
+
+                    <select
+                      value={pickerMinute}
+                      onChange={(e) =>
+                        setPickerMinute(e.target.value)
+                      }
+                      aria-label="Minute"
+                    >
+                      {Array.from(
+                        { length: 60 },
+                        (_, index) =>
+                          String(index).padStart(2, "0")
+                      ).map((minute) => (
+                        <option
+                          key={minute}
+                          value={minute}
+                        >
+                          {minute}
+                        </option>
+                      ))}
+                    </select>
+
+                    {timeFormat === "12" && (
+                      <select
+                        value={pickerPeriod}
+                        onChange={(e) =>
+                          setPickerPeriod(e.target.value)
+                        }
+                        aria-label="AM or PM"
+                      >
+                        <option value="AM">AM</option>
+                        <option value="PM">PM</option>
+                      </select>
+                    )}
+                  </div>
+
+                  <button
+                    className="time-picker-done"
+                    type="button"
+                    onClick={applyPickedTime}
+                  >
+                    Done
+                  </button>
+                </div>
+              )}
             </div>
 
             <div>
