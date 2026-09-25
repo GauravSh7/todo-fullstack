@@ -434,14 +434,28 @@ useEffect(() => {
 
     if (!currentTask) return;
 
+    const previousStatus = currentTask.status;
+
     const newStatus =
-      currentTask.status === "Completed"
+      previousStatus === "Completed"
         ? "Pending"
         : "Completed";
 
+    // Update the UI immediately.
+    setTasks((currentTasks) =>
+      currentTasks.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              status: newStatus,
+            }
+          : item
+      )
+    );
+
     try {
       const response = await fetch(
-      `${API_URL}/api/tasks/${id}` ,
+        `${API_URL}/api/tasks/${id}`,
         {
           method: "PATCH",
           headers: {
@@ -461,24 +475,22 @@ useEffect(() => {
           "Failed to update task"
         );
       }
+    } catch (error) {
+      console.log(
+        "Error updating task:",
+        error
+      );
 
-      const updatedTask =
-        await response.json();
-
+      // Roll back if the server update failed.
       setTasks((currentTasks) =>
         currentTasks.map((item) =>
           item.id === id
             ? {
                 ...item,
-                status: updatedTask.status,
+                status: previousStatus,
               }
             : item
         )
-      );
-    } catch (error) {
-      console.log(
-        "Error updating task:",
-        error
       );
     }
   };
