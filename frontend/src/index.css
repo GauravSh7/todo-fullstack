@@ -1,0 +1,9 @@
+body {
+  background-color: white;
+  color: black;
+}
+.task-row > div,
+.saved-task > div {
+  width: 200px;
+  box-sizing: border-box;
+}
