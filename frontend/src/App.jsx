@@ -1,3 +1,5 @@
+
+import API_URL from "./api";
 import Register from "./register";
 import {
   useEffect,
@@ -115,7 +117,7 @@ useEffect(() => {
 
     const token = localStorage.getItem("token");
 
-    fetch("http://localhost:5000/api/tasks", {
+    fetch(`${API_URL}/api/tasks`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -242,7 +244,7 @@ useEffect(() => {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/tasks",
+       `${API_URL}/api/tasks`,
         {
           method: "POST",
           headers: {
@@ -283,7 +285,7 @@ useEffect(() => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/tasks/${selectedTask}`,
+        `${API_URL}/api/tasks/${selectedTasks}`,
         {
           method: "DELETE",
           headers: {
@@ -331,7 +333,7 @@ useEffect(() => {
 
     try {
       const response = await fetch(
-        `http://localhost:5000/api/tasks/${id}`,
+      `${API_URL}/api/tasks/${id}` ,
         {
           method: "PATCH",
           headers: {

@@ -1,3 +1,4 @@
+import API_URL from "./api";
 import { useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 
@@ -23,7 +24,7 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/register",
+       `${API_URL}/api/register`,
         {
           method: "POST",
           headers: {
@@ -62,7 +63,7 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/google",
+        `${API_URL}/api/auth/google`,
         {
           method: "POST",
           headers: {

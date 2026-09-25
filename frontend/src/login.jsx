@@ -1,3 +1,4 @@
+import API_URL from "./api";
 import { useState } from "react";
 import { GoogleLogin } from "@react-oauth/google";
 
@@ -28,7 +29,7 @@ function Login({
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/login",
+         `${API_URL}/api/login`,
         {
           method: "POST",
           headers: {
@@ -85,7 +86,7 @@ function Login({
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/auth/google",
+       `${API_URL}/api/auth/google`,
         {
           method: "POST",
           headers: {

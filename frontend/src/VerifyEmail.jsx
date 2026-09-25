@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import API_URL from "./api";
 function VerifyEmail({
   email,
   onVerified,
@@ -26,7 +26,7 @@ function VerifyEmail({
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/verify-email-otp",
+       `${API_URL}/api/verify-email-otp`,
         {
           method: "POST",
           headers: {
@@ -69,7 +69,7 @@ function VerifyEmail({
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/resend-email-otp",
+        `${API_URL}/api/resend-email-otp`,
         {
           method: "POST",
           headers: {

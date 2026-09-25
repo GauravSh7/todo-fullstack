@@ -1,5 +1,5 @@
 import { useState } from "react";
-
+import API_URL from "./api";
 function VerifyResetOTP({
   email,
   onVerified,
@@ -23,7 +23,7 @@ function VerifyResetOTP({
 
     try {
       const response = await fetch(
-        "http://localhost:5000/api/verify-reset-otp",
+        `${API_URL}/api/verify-reset-otp`,
         {
           method: "POST",
           headers: {
