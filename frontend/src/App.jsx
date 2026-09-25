@@ -629,13 +629,8 @@ useEffect(() => {
 
                     <button
                       onClick={() => {
-                        setProgressView(
-                          "bar"
-                        );
-
-                        setShowProgressMenu(
-                          false
-                        );
+                        setProgressView("bar");
+                        setShowProgressMenu(false);
                       }}
                     >
                       Progress Bar
@@ -643,13 +638,8 @@ useEffect(() => {
 
                     <button
                       onClick={() => {
-                        setProgressView(
-                          "circle"
-                        );
-
-                        setShowProgressMenu(
-                          false
-                        );
+                        setProgressView("circle");
+                        setShowProgressMenu(false);
                       }}
                     >
                       Progress Circle
@@ -660,16 +650,13 @@ useEffect(() => {
 
               </div>
 
-            </div>
-
-          </div>
-
-
               {/* USER PROFILE */}
+
               <div
                 className="profile-progress-wrapper"
                 ref={userProfileRef}
               >
+
                 <button
                   className="profile-progress-button"
                   type="button"
@@ -705,7 +692,13 @@ useEffect(() => {
                     </button>
                   </div>
                 )}
+
               </div>
+
+            </div>
+
+          </div>
+
           {/* TABLE HEADER */}
 
           <div className="table-header">
