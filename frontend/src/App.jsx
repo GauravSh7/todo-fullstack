@@ -670,9 +670,6 @@ useEffect(() => {
                     {userInitial}
                   </div>
 
-                  <span className="user-arrow">
-                    ▼
-                  </span>
                 </button>
 
                 {showUserMenu && (
