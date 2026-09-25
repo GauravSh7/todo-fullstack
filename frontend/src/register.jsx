@@ -172,7 +172,7 @@ function Register({ onRegisterSuccess, onBackToLogin }) {
       "Google registration failed. Please try again."
     );
   }}
-  width="400"
+  width="300"
   use_fedcm_for_button={true}
 />
         </div>
